@@ -58,13 +58,3 @@ class MinHeap:
         
         return root
 
-    
-if __name__ == "__main__":
-    min_heap = MinHeap()
-    min_heap.insert(3)
-    min_heap.insert(1)
-    min_heap.insert(6)
-    min_heap.insert(5)
-    min_heap.insert(9)
-    min_heap.insert(8)
-    min_heap.show_heap()
