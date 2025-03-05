@@ -17,7 +17,7 @@ class MinHeap:
         
         parent_index = self._parent(index)
         
-        if self.heap[index] < self.heap[parent_index]:
+        if self.heap[index][0] < self.heap[parent_index][0]:
             self.heap[index], self.heap[parent_index] = self.heap[parent_index], self.heap[index]
             self._heapify_up(parent_index)
             
@@ -28,9 +28,9 @@ class MinHeap:
         
         smallest_index = index
         
-        if left_index < size and self.heap[left_index] < self.heap[smallest_index]:
+        if left_index < size and self.heap[left_index][0] < self.heap[smallest_index][0]:
             smallest_index = left_index
-        if right_index < size and self.heap[right_index] < self.heap[smallest_index]:
+        if right_index < size and self.heap[right_index][0] < self.heap[smallest_index][0]:
             smallest_index = right_index
             
         if smallest_index != index:
@@ -57,4 +57,3 @@ class MinHeap:
         self._heapify_down(0)
         
         return root
-
