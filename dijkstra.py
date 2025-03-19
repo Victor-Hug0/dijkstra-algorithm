@@ -1,11 +1,11 @@
-import min_heap
+from min_heap import MinHeap
 
 def dijkstra(graph, start, end):
     
     if start not in graph or end not in graph or start == end:
         raise RuntimeError("Valores incorretos passados como parâmetro!")
     
-    minHeap = min_heap.MinHeap()
+    minHeap = MinHeap()
     minHeap.insert([0, start])
     
     distances = {node: float("inf") for node in graph}
