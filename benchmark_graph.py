@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import benchmark
+from matplotlib.ticker import FuncFormatter, ScalarFormatter
 
 def plot_comparative(results, graph_sizes):
     reference_values = {
@@ -24,17 +25,41 @@ def plot_comparative(results, graph_sizes):
     x_ref = [r[0] for r in reference_results]
     y_ref = [r[1] for r in reference_results]
     
+    min_y = min(min(y_mine), min(y_ref)) if y_mine and y_ref else 5.00
+    max_y = max(max(y_mine), max(y_ref)) if y_mine and y_ref else 15.00
+    
     plt.loglog(x_mine, y_mine, 'o-', label='My implementation', linewidth=2)
     plt.loglog(x_ref, y_ref, 's--', label='Bin-Dij (reference)', linewidth=2)
+    
+    def format_k(x, pos):
+        if x >= 1000000:
+            return f"{int(x/1000000)}M"
+        elif x >= 1000:
+            return f"{int(x/1000)}k"
+        return str(int(x))
+    
+    plt.gca().xaxis.set_major_formatter(FuncFormatter(format_k))
+    plt.gca().set_xticks(graph_sizes)
+    
+    scalar_formatter = ScalarFormatter()
+    scalar_formatter.set_scientific(False)
+    plt.gca().yaxis.set_major_formatter(scalar_formatter)
+    
+    y_ticks = [ 5, 10, 20, 30, 50, 70, 100]
+    
+    if max_y > 15:
+        y_ticks.extend([ 30, 50, 100])
+    
+    plt.gca().set_yticks(y_ticks)
     
     plt.title('Performance Comparison: My Implementation vs. Bin-Dij', fontsize=14)
     plt.xlabel('Number of nodes (n)', fontsize=12)
     plt.ylabel('Execution time (seconds)', fontsize=12)
     plt.grid(True, alpha=0.3)
     plt.legend(fontsize=12)
-    
+
     for i, txt in enumerate(x_mine):
-        plt.annotate(f"{txt}", (x_mine[i], y_mine[i]), 
+        plt.annotate(format_k(txt, None), (x_mine[i], y_mine[i]), 
                      textcoords="offset points", xytext=(0,10), ha='center')
     
     plt.tight_layout()
