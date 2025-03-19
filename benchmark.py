@@ -17,7 +17,7 @@ def benchmark(gaphLen):
         end = time.time()
         total = end-start
         
-        print(f"{gaphLen[n]} -> {total} ms")
+        print(f"{gaphLen[n]} -> {total:2f} sec")
         
         results.append((n, total))
         
