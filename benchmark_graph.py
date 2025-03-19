@@ -9,9 +9,9 @@ def plot_comparative(results, graph_sizes):
         128000: 0.25,     
         256000: 0.60,     
         512000: 1.40,     
-        1024000: 3.00,    
-        2048000: 6.50,   
-        4096000: 15.00,   
+        1024000: 4.00,    
+        2048000: 9.00,   
+        4096000: 22.00,   
     }
     
     my_impl_results = [(graph_sizes[r[0]], r[1]) for r in results]
