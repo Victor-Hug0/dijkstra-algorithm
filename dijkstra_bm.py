@@ -16,7 +16,7 @@ def dijkstra(graph, start, end):
         current_distance, current_node = minHeap.pop_min()
         
         if current_node == end:
-            return distances[end]
+            break
         
         if current_node in processed:
             continue
