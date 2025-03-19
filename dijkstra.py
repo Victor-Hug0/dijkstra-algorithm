@@ -7,6 +7,7 @@ def dijkstra(graph, start, end):
     
     minHeap = MinHeap()
     minHeap.insert([0, start])
+    processed = set()
     
     distances = {node: float("inf") for node in graph}
     distances[start] = 0
@@ -17,12 +18,15 @@ def dijkstra(graph, start, end):
         current_distance, current_node = minHeap.pop_min()
         
         if current_node == end:
-            break
+            return distances[end]
         
-        if current_distance > distances[current_node]:
+        if current_node in processed:
             continue
         
         for neighbor, weight in graph[current_node]:
+            if neighbor in processed:
+                continue
+            
             distance = current_distance + weight
             
             if distance < distances[neighbor]:
