@@ -12,6 +12,7 @@ class MinHeap:
         return (index-1) // 2
     
     def _heapify_up(self, index):
+        """
         if index == 0:
             return
         
@@ -20,8 +21,19 @@ class MinHeap:
         if self.heap[index][0] < self.heap[parent_index][0]:
             self.heap[index], self.heap[parent_index] = self.heap[parent_index], self.heap[index]
             self._heapify_up(parent_index)
+        """
+        
+        while index > 0:
+            parent_index = self._parent(index)
+            
+            if self.heap[index][0] < self.heap[parent_index][0]:
+                self.heap[index], self.heap[parent_index] = self.heap[parent_index], self.heap[index]
+                index = parent_index
+            else:
+                break 
             
     def _heapify_down(self, index):
+        """
         size = len(self.heap)
         left_index = self._left_child(index)
         right_index = self._right_child(index)
@@ -36,6 +48,24 @@ class MinHeap:
         if smallest_index != index:
             self.heap[index], self.heap[smallest_index] = self.heap[smallest_index], self.heap[index]
             self._heapify_down(smallest_index)
+        """
+        size = len(self.heap)
+        
+        while True:
+            left_index = self._left_child(index)
+            right_index = self._right_child(index)
+            smallest_index = index
+            
+            if left_index < size and self.heap[left_index][0] < self.heap[smallest_index][0]:
+                smallest_index = left_index
+            if right_index < size and self.heap[right_index][0] < self.heap[smallest_index][0]:
+                smallest_index = right_index
+            
+            if smallest_index == index:
+                break
+            
+            self.heap[index], self.heap[smallest_index] = self.heap[smallest_index], self.heap[index]
+            index = smallest_index
             
     def show_heap(self):
         print(self.heap)
