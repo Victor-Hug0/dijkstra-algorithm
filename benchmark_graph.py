@@ -45,10 +45,10 @@ def plot_comparative(results, graph_sizes):
     scalar_formatter.set_scientific(False)
     plt.gca().yaxis.set_major_formatter(scalar_formatter)
     
-    y_ticks = [ 5, 10, 20, 30, 50, 70, 100]
+    y_ticks = [ 0.05, 0.1, 0.3, 0.5, 1, 3, 5, 10, 15]
     
     if max_y > 15:
-        y_ticks.extend([ 30, 50, 100])
+        y_ticks.extend([ 20, 30, 50, 70, 100])
     
     plt.gca().set_yticks(y_ticks)
     
