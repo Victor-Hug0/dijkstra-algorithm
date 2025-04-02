@@ -16,12 +16,14 @@ def dijkstra(graph, start, end):
     
     while len(minHeap.heap) > 0:
         current_distance, current_node = minHeap.pop_min()
-        
+                
         if current_node == end:
             break
         
         if current_node in processed:
             continue
+        
+        processed.add(current_node)
         
         for neighbor, weight in graph[current_node]:
             if neighbor in processed:
