@@ -2,17 +2,18 @@ from min_heap import MinHeap
 
 def dijkstra(graph, start, end):
     
-    if start not in graph or end not in graph or start == end:
-        raise RuntimeError("Valores incorretos passados como parâmetro!")
+    num_nodes = len(graph)
+    if start < 0 or start >= num_nodes or end < 0 or end >= num_nodes:
+        raise RuntimeError("Nós inválidos!")
     
     minHeap = MinHeap()
     minHeap.insert([0, start])
     processed = set()
     
-    distances = {node: float("inf") for node in graph}
+    distances = [float('inf')] * num_nodes
     distances[start] = 0
     
-    previous = {node: None for node in graph}
+    previous = [None] * num_nodes
     
     while len(minHeap.heap) > 0:
         current_distance, current_node = minHeap.pop_min()
