@@ -1,7 +1,7 @@
-# Arquivo test.py
 import osmnx as ox
 from dijkstra import dijkstra
 from geopy.geocoders import Nominatim
+import matplotlib.pyplot as plt
 import time
 
 def main():
@@ -36,6 +36,18 @@ def main():
     end = node_index[node_destination]
     total_distance, route_idx = dijkstra(adj_list, start=start, end=end)
     nodes_route = [nodes[int(idx)] for idx in route_idx]
+    
+    # nodes_route já contém a sequência de nós do caminho
+    fig, ax = ox.plot_graph_route(
+        G, 
+        nodes_route, 
+        route_color='r',     # cor da rota (vermelho)
+        route_linewidth=4,   # espessura da linha da rota
+        node_size=0,         # não mostrar os nós
+        bgcolor='w',         # fundo branco
+        show=False,          # não mostrar imediatamente
+        close=False          # não fechar a figura
+    )
 
     addresses = []
     last_address = None
@@ -71,37 +83,9 @@ def main():
     
     for idx, endereco in enumerate(addresses, 1):
         print(f"{idx}. {endereco['rua']}, {endereco['bairro']} - CEP {endereco['CEP']}")
-    """
-    street_names = []
-
-    street_names.append(origin.split(',')[0])
-    
-    for i in range(len(nodes_route) - 1):
-        u, v = nodes_route[i], nodes_route[i+1]
-        if G.has_edge(u, v):
-            edge_data = G.get_edge_data(u, v)
-            for key in edge_data:
-                if 'name' in edge_data[key]:
-                    name = edge_data[key]['name']
-                    if isinstance(name, list):
-                        name = name[0]  
-                    if name != street_names[-1]:
-                        street_names.append(name)
-                    break
-                    
-
-    street_names.append(destination.split(',')[0])
-    
-    print(f"Origem: {origin} ({coord_origin})")
-    print(f"Destino: {destination} ({coord_destination})")
-    print(f"Distância total: {total_distance/1000:.2f} km")
-    print("\nRuas percorridas:")
-    for name in street_names:
-        if name:
-            print(f"- {name}")
-    """
-    
-
+        
+    fig.savefig("rota_aracaju.png", dpi=300, bbox_inches='tight')
+    plt.show()
 
 if __name__ == "__main__":
     main()
